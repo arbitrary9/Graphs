@@ -44,7 +44,8 @@ namespace Graphs
                 {
                     for (int j = 0; j < length; j++)
                     {
-                        adjacencyMatrix[i, j] = line[k++];
+                        if(line[k] == '1' || line[k] == '0')
+                            adjacencyMatrix[i, j] = line[k++] == '1' ? 1 : 0;
                     }
                 }
             }
