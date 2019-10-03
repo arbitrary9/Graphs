@@ -21,5 +21,10 @@ namespace Graphs
             Name = "x" + number;
             AdjacentVertexes = new List<GraphVertex>();
         }
+
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }
