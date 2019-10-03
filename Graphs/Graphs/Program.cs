@@ -8,8 +8,9 @@ namespace Graphs
         static void Main(string[] args)
         {
             var graph = new Graph(_matrixpath);
-            graph.Print(_matrixpath);
             graph.Print();
+            graph.WalkInDepth();
+            graph.WalkInWide();
         }
     }
 }

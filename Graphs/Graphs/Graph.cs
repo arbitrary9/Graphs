@@ -6,7 +6,6 @@ using System.Text;
 
 namespace Graphs
 {
-
     public class Graph
     {
         #region Properties
@@ -24,14 +23,31 @@ namespace Graphs
         }
         public Graph(string _path)
         {
-            FillGraph(ReadFromFile(_path), SizeFromFile(_path));            
+            FillGraph(ReadFromFile(_path), LengthFromFile(_path));            
         }
 
+        #endregion
+        #region Methods
+        public void WalkInDepth() 
+        {
+            throw new NotImplementedException();
+        }
+        public void WalkInWide() 
+        {
+            throw new NotImplementedException();
+        }
         private void FillGraph(int[,] adjacencyMatrix, int length)
         {
+            if (adjacencyMatrix == null)
+                throw new Exception("Matrix cannot be null");
+            if (length == 0)
+                throw new Exception("Length of matrix can't be equal with 0");
+
             for (int row = 0; row < length; row++)
+            {
                 GraphVertexes.Add(new GraphVertex(row + 1));
-            
+            }
+
             for (int col = 0; col < length; col++)
             {
                 for (int row = 0; row < length; row++)
@@ -42,10 +58,8 @@ namespace Graphs
                             .AdjacentVertexes.Add(GraphVertexes.Where(y => y.Name == "x" + (row + 1)).FirstOrDefault());
                     }
                 }
-            }          
+            }
         }
-        #endregion
-        #region Methods
         public void Print()
         {
             Console.WriteLine("\n### Adjacent list ###");
@@ -60,17 +74,19 @@ namespace Graphs
             Console.WriteLine("### End of adjacent list ###\n");
 
         }
-        public void Print(string _path, int[,] adjacencyMatrix = null, int size = 0)
+        public void Print(string _path, int[,] adjacencyMatrix = null, int length = 0)
         {
+            if (string.IsNullOrEmpty(_path))
+                throw new Exception("FilePath can't be null or empty");
             if (adjacencyMatrix == null)
                 adjacencyMatrix = ReadFromFile(_path);
-            if (size == 0)
-                size = SizeFromFile(_path);
+            if (length == 0)
+                length = LengthFromFile(_path);
 
             Console.WriteLine("### Adjacent matrix ###");
-            for (int i = 0; i < size; i++)
+            for (int i = 0; i < length; i++)
             {
-                for (int j = 0; j < size; j++)
+                for (int j = 0; j < length; j++)
                 {
                     Console.Write(adjacencyMatrix[i, j] + " ");
                 }
@@ -80,11 +96,15 @@ namespace Graphs
         }
         private int[,] ReadFromFile(string filePath)
         {
+            if (string.IsNullOrEmpty(filePath))
+                throw new Exception("FilePath can't be null or empty");
             string[] allLinesFromFile =  File.ReadAllLines(filePath);
             return ToArray(allLinesFromFile);
         }
-        private int SizeFromFile(string filePath)
+        private int LengthFromFile(string filePath)
         {
+            if (string.IsNullOrEmpty(filePath))
+                throw new Exception("FilePath can't be null or empty");
             string[] allLinesFromFile = File.ReadAllLines(filePath);
             return allLinesFromFile.Length;
         }
